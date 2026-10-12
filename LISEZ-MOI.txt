@@ -1,16 +1,26 @@
-SUIVI MUSCULATION — INSTALLATION SUR IPHONE
+IRON LOG — Suivi Musculation iPhone
+====================================
 
-Cette petite application web est prête à héberger. Elle enregistre les séries, répétitions, charges, notes et mesures dans le stockage local du navigateur sur l'appareil.
+Fichiers à publier à la racine du dépôt GitHub :
+- index.html
+- manifest.json
+- sw.js
+- LISEZ-MOI.txt
 
-IMPORTANT : un fichier HTML seul ne peut pas être transformé directement en application installable depuis Safari. Il faut d'abord publier le dossier sur une adresse HTTPS (par exemple GitHub Pages). Aucun hébergement n'a été créé automatiquement.
+IMPORTANT
+- Le suivi enregistre les performances dans le stockage local du navigateur de cet appareil.
+- Exporte régulièrement une sauvegarde depuis l'onglet Données & réglages.
+- Le bilan du coach est une analyse automatique locale fondée sur des règles; il ne s'agit pas d'un modèle d'IA générative.
+- Aucune clé API ni aucun service externe n'est utilisé.
+- Pour ajouter une véritable IA générative plus tard, il faudra un backend sécurisé qui garde la clé API côté serveur, jamais dans le dépôt ou le navigateur.
 
-Publication gratuite via GitHub Pages :
-1. Crée/ouvre un compte sur https://github.com
-2. Crée un dépôt public nommé suivi-muscu
-3. Envoie index.html, manifest.json et sw.js à la racine du dépôt.
-4. Dans Settings > Pages, active la publication depuis la branche main et le dossier /(root).
-5. Attends l'URL affichée par GitHub Pages (elle ressemble à https://TON-PSEUDO.github.io/suivi-muscu/).
-6. Ouvre cette URL dans Safari sur ton iPhone.
-7. Appuie sur Partager > Sur l’écran d’accueil > Ajouter.
+Publication GitHub Pages depuis iPhone
+1. Ouvre le dépôt GitHub et va dans Code.
+2. Supprime ou remplace les anciens fichiers index.html, manifeste.json, sw.js et manifest.json si nécessaire.
+3. Ajoute les fichiers de cette archive à la racine (Upload files), puis valide avec Commit changes.
+4. Dans Settings > Pages, choisis Deploy from a branch, la branche contenant les fichiers (souvent main) et /(root).
+5. Attends la fin du déploiement.
+6. Ouvre l'URL GitHub Pages dans Safari. Actualise la page; si l'ancienne version persiste, ferme puis rouvre Safari ou efface les données du site uniquement après avoir exporté les performances.
+7. Pour l'icône iPhone : Safari > Partager > Sur l'écran d'accueil > Ajouter.
 
-Les données restent sur cet appareil et dans ce navigateur. Utilise « Exporter mes données » pour sauvegarder régulièrement. Effacer les données du site peut supprimer les saisies locales.
+Les performances sont locales à ce navigateur et ne sont pas automatiquement transférées quand on remplace le code ou change d'appareil. Les mises à jour du site ne devraient pas effacer le stockage local, mais garde des sauvegardes JSON régulières.

@@ -1,10 +1,11 @@
 {
-  "name": "Suivi Musculation",
+  "name": "IRON LOG — Suivi Musculation",
   "short_name": "Suivi Muscu",
-  "start_url": "./index.html",
+  "description": "Suivi personnel de musculation et bilan de progression local.",
+  "start_url": "./",
+  "scope": "./",
   "display": "standalone",
-  "background_color": "#0c1422",
-  "theme_color": "#14263d",
-  "lang": "fr",
-  "description": "Carnet de suivi de musculation sur 4 jours"
+  "background_color": "#0b0b0d",
+  "theme_color": "#111111",
+  "icons": []
 }
