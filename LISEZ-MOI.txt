@@ -1,26 +1,21 @@
-IRON LOG — Suivi Musculation iPhone
-====================================
+IRON LOG V2 — Mise à jour iPhone
+================================
 
-Fichiers à publier à la racine du dépôt GitHub :
-- index.html
-- manifest.json
-- sw.js
-- LISEZ-MOI.txt
+Contenu :
+- index.html : application, bibliothèque d'exercices illustrée, analyse locale, historique et suppression de séances.
+- manifeste.json : configuration de l'application iPhone.
+- sw.js : cache hors ligne, version renouvelée.
 
-IMPORTANT
-- Le suivi enregistre les performances dans le stockage local du navigateur de cet appareil.
-- Exporte régulièrement une sauvegarde depuis l'onglet Données & réglages.
-- Le bilan du coach est une analyse automatique locale fondée sur des règles; il ne s'agit pas d'un modèle d'IA générative.
-- Aucune clé API ni aucun service externe n'est utilisé.
-- Pour ajouter une véritable IA générative plus tard, il faudra un backend sécurisé qui garde la clé API côté serveur, jamais dans le dépôt ou le navigateur.
+INSTALLATION SUR GITHUB (iPhone)
+1. Dans le dépôt OscourSalle, choisis la branche utilisée par GitHub Pages (la capture précédente montrait « Principal »).
+2. Ouvre chaque ancien fichier puis utilise le crayon Modifier pour remplacer tout son contenu, ou envoie les fichiers de même nom par Upload files si GitHub propose bien le remplacement.
+3. Remplace index.html, manifeste.json et sw.js par ceux de cette archive. Ne téléverse pas l'archive ZIP elle-même.
+4. Valide avec « Commettre les changements » sur la branche principale.
+5. Attends quelques minutes, puis ouvre l'URL GitHub Pages et actualise.
+6. Si l'ancienne version persiste, ferme/réouvre Safari. Le service worker a une nouvelle version de cache.
 
-Publication GitHub Pages depuis iPhone
-1. Ouvre le dépôt GitHub et va dans Code.
-2. Supprime ou remplace les anciens fichiers index.html, manifeste.json, sw.js et manifest.json si nécessaire.
-3. Ajoute les fichiers de cette archive à la racine (Upload files), puis valide avec Commit changes.
-4. Dans Settings > Pages, choisis Deploy from a branch, la branche contenant les fichiers (souvent main) et /(root).
-5. Attends la fin du déploiement.
-6. Ouvre l'URL GitHub Pages dans Safari. Actualise la page; si l'ancienne version persiste, ferme puis rouvre Safari ou efface les données du site uniquement après avoir exporté les performances.
-7. Pour l'icône iPhone : Safari > Partager > Sur l'écran d'accueil > Ajouter.
+DONNÉES
+Les performances V2 utilisent une nouvelle clé de stockage local. Les données de l'ancienne version peuvent ne pas apparaître automatiquement. Exporte les anciennes données avant mise à jour si elles comptent pour toi. Les données restent locales au navigateur de l'appareil et ne se synchronisent pas.
 
-Les performances sont locales à ce navigateur et ne sont pas automatiquement transférées quand on remplace le code ou change d'appareil. Les mises à jour du site ne devraient pas effacer le stockage local, mais garde des sauvegardes JSON régulières.
+IMAGES
+La bibliothèque contient des illustrations schématiques intégrées au code (pas des photos de salle). Les explications donnent les muscles ciblés, la mise en place et un conseil technique pour chaque exercice.
