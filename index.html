@@ -1,0 +1,101 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="theme-color" content="#14263d">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="Suivi Muscu">
+<link rel="manifest" href="manifest.json">
+<title>Suivi Muscu</title>
+<style>
+:root{--bg:#0c1422;--panel:#142238;--panel2:#1b2d46;--text:#f4f7fb;--muted:#a8b8cc;--accent:#65d6b0;--line:#2a3d56;--blue:#8fc6ff}
+*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--text);font:16px -apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;padding:env(safe-area-inset-top) 0 env(safe-area-inset-bottom)}
+header{padding:22px 18px 14px;background:linear-gradient(145deg,#14263d,#1b3853)}h1{font-size:24px;margin:0 0 5px}header p{margin:0;color:var(--muted);font-size:13px}
+main{max-width:700px;margin:auto;padding:14px 14px 36px}.tabs{display:grid;grid-template-columns:repeat(2,1fr);gap:8px;margin-bottom:14px}.tab{border:1px solid var(--line);border-radius:13px;padding:12px 10px;background:var(--panel);color:var(--text);text-align:left;font-weight:700}.tab small{display:block;font-weight:400;color:var(--muted);margin-top:4px}.tab.active{background:#244b5c;border-color:var(--accent);box-shadow:inset 0 0 0 1px var(--accent)}
+.summary,.exercise,.panel{background:var(--panel);border:1px solid var(--line);border-radius:16px;padding:14px;margin-bottom:12px}.row{display:flex;align-items:center;justify-content:space-between;gap:10px}.muted{color:var(--muted);font-size:13px}.progress{height:7px;background:#293a50;border-radius:9px;overflow:hidden;margin-top:10px}.bar{height:100%;background:var(--accent);width:0}
+h2{font-size:20px;margin:0 0 5px}h3{font-size:16px;margin:0}button,input,textarea{font:inherit}button{cursor:pointer}.open{background:transparent;color:var(--text);border:0;text-align:left;width:100%;padding:0}.sets{margin-top:12px;display:grid;gap:8px}.set{background:var(--panel2);border-radius:12px;padding:10px}.sethead{display:flex;justify-content:space-between;align-items:center;margin-bottom:8px;font-weight:650}.fields{display:grid;grid-template-columns:1fr 1fr;gap:8px}.field label{display:block;color:var(--muted);font-size:12px;margin-bottom:5px}.field input,.field textarea,input[type=date],textarea{width:100%;background:#0d1929;color:var(--text);border:1px solid #354b65;border-radius:9px;padding:11px;min-width:0}.actions{display:flex;gap:8px;margin-top:10px}.btn{border:0;border-radius:10px;padding:11px 13px;font-weight:700}.primary{background:var(--accent);color:#09231d}.secondary{background:#293e58;color:var(--text);border:1px solid var(--line)}.done{border-color:#398e76}.donebadge{color:var(--accent);font-size:12px}.full{width:100%}.note{margin-top:10px}.hidden{display:none}.week{display:grid;grid-template-columns:1fr 1fr;gap:8px}.stat{background:var(--panel2);padding:12px;border-radius:12px}.stat strong{display:block;font-size:20px;margin-top:4px}.danger{color:#ffb6b6}.tiny{font-size:12px;color:var(--muted);line-height:1.5}footer{text-align:center;color:var(--muted);font-size:12px;padding:14px}
+</style>
+</head>
+<body>
+<header><h1>🏋️ Suivi Muscu</h1><p>Prise de masse · priorité aux bras · 4 séances</p></header>
+<main>
+  <div class="tabs" id="tabs"></div>
+  <section class="summary">
+    <div class="row"><div><div class="muted">SÉANCE DU JOUR</div><h2 id="sessionTitle">Dos + biceps</h2></div><div style="text-align:right"><div class="muted">Date</div><input type="date" id="dateInput" style="width:145px;padding:8px"></div></div>
+    <div class="row" style="margin-top:12px"><span class="muted" id="progressText">0/6 exercices terminés</span><strong id="progressPct">0%</strong></div><div class="progress"><div class="bar" id="progressBar"></div></div>
+  </section>
+  <div id="exerciseList"></div>
+  <section class="panel">
+    <h2>Bilan de séance</h2><p class="muted">Note ton énergie, tes sensations ou ce que tu veux améliorer.</p>
+    <textarea id="sessionNote" rows="3" placeholder="Ex. bonnes sensations, augmenter la charge au rowing…"></textarea>
+    <div class="actions"><button class="btn primary full" id="exportBtn">Exporter mes données</button><button class="btn secondary" id="resetBtn">Réinitialiser</button></div>
+    <p class="tiny">Les données sont enregistrées automatiquement sur cet appareil dans ce navigateur. « Exporter » permet de télécharger une sauvegarde JSON.</p>
+  </section>
+  <section class="panel">
+    <h2>Suivi progression</h2><p class="muted">Ajoute tes mesures chaque semaine.</p>
+    <div class="fields">
+      <div class="field"><label>Poids moyen (kg)</label><input id="weight" type="number" step=".1" placeholder="Ex. 58.2"></div>
+      <div class="field"><label>Tour de bras (cm)</label><input id="arm" type="number" step=".1" placeholder="Ex. 30.5"></div>
+      <div class="field"><label>Tour de poitrine (cm)</label><input id="chest" type="number" step=".1" placeholder="Facultatif"></div>
+      <div class="field"><label>Tour de taille (cm)</label><input id="waist" type="number" step=".1" placeholder="Facultatif"></div>
+    </div>
+    <div class="actions"><button class="btn primary full" id="saveMeasure">Enregistrer la mesure</button></div>
+    <div id="measureHistory" class="tiny" style="margin-top:12px"></div>
+  </section>
+  <footer>Progresse proprement · 1–3 répétitions en réserve · note tes performances à chaque séance.</footer>
+</main>
+<script>
+const plans=[
+{ id:"J1",name:"Dos + biceps",duration:"70–85 min",ex:[
+["Tirage vertical",3,"8–12","2 min"],["Rowing poitrine appuyée",3,"8–12","2 min"],["Rowing poulie basse",2,"10–12","2 min"],["Curl incliné haltères",3,"8–12","60–90 s"],["Curl pupitre barre EZ",3,"8–12","60–90 s"],["Curl marteau",2,"10–15","60–90 s"]]},
+{ id:"J2",name:"Pectoraux + triceps",duration:"60–75 min",ex:[
+["Développé incliné haltères",3,"6–10","2–3 min"],["Développé couché",3,"8–10","2–3 min"],["Écartés à la poulie",2,"12–15","60–90 s"],["Extension triceps à la corde",3,"10–15","60–90 s"],["Extension triceps au-dessus de la tête",3,"10–15","60–90 s"]]},
+{ id:"J3",name:"Jambes + abdos",duration:"60–75 min",ex:[
+["Presse à cuisses",3,"8–12","2 min"],["Soulevé de terre roumain",3,"8–10","2–3 min"],["Leg curl",3,"10–15","60–90 s"],["Extension quadriceps",2,"12–15","60–90 s"],["Mollets à la machine",3,"12–20","60–90 s"],["Crunch à la poulie",3,"12–15","60–90 s"]]},
+{ id:"J4",name:"Épaules + bras",duration:"70–85 min",ex:[
+["Développé épaules",3,"8–10","90–120 s"],["Élévations latérales",4,"12–20","60–90 s"],["Oiseau à la machine",3,"12–15","60–90 s"],["Curl à la poulie",3,"10–15","60–90 s"],["Curl marteau à la corde",2,"10–15","60–90 s"],["Extension triceps à la corde",3,"10–15","60–90 s"],["Extension triceps au-dessus de la tête",3,"10–15","60–90 s"]]}
+];
+const $=s=>document.querySelector(s);
+const today=()=>new Date().toLocaleDateString("en-CA");
+let state={day:"J1",date:today(),logs:{},done:{},notes:{},measurements:[]};
+try{state={...state,...JSON.parse(localStorage.getItem("suiviMuscuV1")||"{}")}}catch(e){}
+function save(){localStorage.setItem("suiviMuscuV1",JSON.stringify(state))}
+function key(exIndex,setIndex,field){return `${state.day}|${state.date}|${exIndex}|${setIndex}|${field}`}
+function renderTabs(){
+ $("#tabs").innerHTML=plans.map(p=>`<button class="tab ${state.day===p.id?"active":""}" data-day="${p.id}">${p.id} · ${p.name}<small>${p.duration}</small></button>`).join("");
+ document.querySelectorAll("[data-day]").forEach(b=>b.onclick=()=>{state.day=b.dataset.day;save();render()});
+}
+function renderExercises(){
+ const p=plans.find(x=>x.id===state.day);$("#sessionTitle").textContent=p.name;
+ let doneCount=0;
+ $("#exerciseList").innerHTML=p.ex.map((ex,i)=>{
+ const exkey=`${state.day}|${state.date}|${i}`,done=!!state.done[exkey];if(done)doneCount++;
+ const rows=Array.from({length:ex[1]},(_,j)=>`<div class="set"><div class="sethead"><span>Série ${j+1}</span><span class="muted">Cible : ${ex[2]}</span></div><div class="fields"><div class="field"><label>Charge (kg)</label><input type="number" step="0.5" inputmode="decimal" placeholder="kg" data-log="${key(i,j,"kg")}" value="${state.logs[key(i,j,"kg")]||""}"></div><div class="field"><label>Répétitions</label><input type="number" inputmode="numeric" placeholder="reps" data-log="${key(i,j,"reps")}" value="${state.logs[key(i,j,"reps")]||""}"></div></div></div>`).join("");
+ return `<article class="exercise ${done?"done":""}"><button class="open row" data-toggle="${i}"><div><h3>${i+1}. ${ex[0]}</h3><div class="muted" style="margin-top:5px">${ex[1]} séries · ${ex[2]} reps · repos ${ex[3]}</div></div><span>${done?'<span class="donebadge">✓ Terminé</span>':'⌄'}</span></button><div class="sets ${state.notes[exkey+"|open"]===false?"hidden":""}" id="sets${i}">${rows}<div class="field note"><label>Notes sur l’exercice</label><textarea rows="2" data-note="${exkey}" placeholder="Technique, ressenti, prochaine charge…">${state.notes[exkey]||""}</textarea></div><button class="btn ${done?"secondary":"primary"} full" data-done="${exkey}">${done?"Annuler terminé":"Valider l’exercice"}</button></div></article>`
+ }).join("");
+ $("#progressText").textContent=`${doneCount}/${p.ex.length} exercices terminés`;
+ $("#progressPct").textContent=Math.round(doneCount/p.ex.length*100)+"%";
+ $("#progressBar").style.width=(doneCount/p.ex.length*100)+"%";
+ document.querySelectorAll("[data-log]").forEach(el=>el.addEventListener("input",()=>{state.logs[el.dataset.log]=el.value;save()}));
+ document.querySelectorAll("[data-note]").forEach(el=>el.addEventListener("input",()=>{state.notes[el.dataset.note]=el.value;save()}));
+ document.querySelectorAll("[data-done]").forEach(el=>el.onclick=()=>{state.done[el.dataset.done]=!state.done[el.dataset.done];save();renderExercises()});
+ document.querySelectorAll("[data-toggle]").forEach(el=>el.onclick=()=>{const k=`${state.day}|${state.date}|${el.dataset.toggle}|open`;state.notes[k]=state.notes[k]===false?true:false;save();renderExercises()});
+}
+function renderMeasures(){
+ $("#measureHistory").innerHTML=state.measurements.length?state.measurements.slice(-8).reverse().map(m=>`<div style="padding:8px 0;border-bottom:1px solid var(--line)"><strong>${m.date}</strong> · ${m.weight||"—"} kg · bras ${m.arm||"—"} cm · poitrine ${m.chest||"—"} cm · taille ${m.waist||"—"} cm</div>`).join(""):"Aucune mesure enregistrée pour le moment.";
+}
+function render(){
+ renderTabs();$("#dateInput").value=state.date;$("#sessionNote").value=state.notes[state.day+"|"+state.date+"|general"]||"";
+ renderExercises();renderMeasures();
+}
+$("#dateInput").addEventListener("change",e=>{state.date=e.target.value||today();save();render()});
+$("#sessionNote").addEventListener("input",e=>{state.notes[state.day+"|"+state.date+"|general"]=e.target.value;save()});
+$("#saveMeasure").onclick=()=>{const m={date:today(),weight:$("#weight").value,arm:$("#arm").value,chest:$("#chest").value,waist:$("#waist").value};if(!m.weight&&!m.arm&&!m.chest&&!m.waist){alert("Renseigne au moins une mesure.");return}state.measurements.push(m);save();["weight","arm","chest","waist"].forEach(id=>$("#"+id).value="");renderMeasures();alert("Mesure enregistrée !")};
+$("#exportBtn").onclick=()=>{const blob=new Blob([JSON.stringify(state,null,2)],{type:"application/json"});const url=URL.createObjectURL(blob);const a=document.createElement("a");a.href=url;a.download="suivi-musculation-sauvegarde.json";a.click();URL.revokeObjectURL(url)};
+$("#resetBtn").onclick=()=>{if(confirm("Effacer toutes les séances, notes et mesures enregistrées sur cet appareil ?")){localStorage.removeItem("suiviMuscuV1");state={day:"J1",date:today(),logs:{},done:{},notes:{},measurements:[]};render()}};
+render();
+if("serviceWorker" in navigator && location.protocol.startsWith("http"))navigator.serviceWorker.register("./sw.js").catch(()=>{});
+</script>
+</body></html>

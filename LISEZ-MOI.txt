@@ -1,0 +1,16 @@
+SUIVI MUSCULATION — INSTALLATION SUR IPHONE
+
+Cette petite application web est prête à héberger. Elle enregistre les séries, répétitions, charges, notes et mesures dans le stockage local du navigateur sur l'appareil.
+
+IMPORTANT : un fichier HTML seul ne peut pas être transformé directement en application installable depuis Safari. Il faut d'abord publier le dossier sur une adresse HTTPS (par exemple GitHub Pages). Aucun hébergement n'a été créé automatiquement.
+
+Publication gratuite via GitHub Pages :
+1. Crée/ouvre un compte sur https://github.com
+2. Crée un dépôt public nommé suivi-muscu
+3. Envoie index.html, manifest.json et sw.js à la racine du dépôt.
+4. Dans Settings > Pages, active la publication depuis la branche main et le dossier /(root).
+5. Attends l'URL affichée par GitHub Pages (elle ressemble à https://TON-PSEUDO.github.io/suivi-muscu/).
+6. Ouvre cette URL dans Safari sur ton iPhone.
+7. Appuie sur Partager > Sur l’écran d’accueil > Ajouter.
+
+Les données restent sur cet appareil et dans ce navigateur. Utilise « Exporter mes données » pour sauvegarder régulièrement. Effacer les données du site peut supprimer les saisies locales.

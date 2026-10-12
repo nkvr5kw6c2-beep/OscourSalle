@@ -1,0 +1,10 @@
+{
+  "name": "Suivi Musculation",
+  "short_name": "Suivi Muscu",
+  "start_url": "./index.html",
+  "display": "standalone",
+  "background_color": "#0c1422",
+  "theme_color": "#14263d",
+  "lang": "fr",
+  "description": "Carnet de suivi de musculation sur 4 jours"
+}
