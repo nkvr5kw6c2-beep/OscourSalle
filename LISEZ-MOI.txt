@@ -28,3 +28,9 @@ CORRECTION DES VISUELS — VERSION 3
 - Pour publier, envoyer/remplacer index.html et sw.js ET ajouter le dossier images/ complet (22 fichiers JPG).
 
 INSTALLATION SIMPLE SUR IPHONE : les 22 visuels sont intégrés directement dans index.html. Il suffit de remplacer index.html et sw.js sur GitHub; manifeste.json et LISEZ-MOI.txt peuvent rester tels quels.
+
+VERSION 4 — AJOUTS
+- Chronomètre de repos de 90 secondes, lançable depuis chaque série; pause et réinitialisation.
+- Nouvelle catégorie Alimentation : repère protéique indicatif selon le poids, exemples de repas et habitudes simples.
+- Stockage local conservé; aucune API externe ni clé secrète.
+- Pour publier, remplacer index.html et sw.js sur GitHub Pages.
