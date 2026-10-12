@@ -19,3 +19,12 @@ Les performances V2 utilisent une nouvelle clé de stockage local. Les données 
 
 IMAGES
 La bibliothèque contient des illustrations schématiques intégrées au code (pas des photos de salle). Les explications donnent les muscles ciblés, la mise en place et un conseil technique pour chaque exercice.
+
+
+CORRECTION DES VISUELS — VERSION 3
+- Les cartes utilisent désormais 22 visuels réalistes locaux (dossier images/), au lieu des dessins schématiques.
+- Les images sont intégrées au dépôt : pas de clé API ni de service externe requis.
+- Le service worker est passé en v3 et met en cache les images pour l'usage hors ligne.
+- Pour publier, envoyer/remplacer index.html et sw.js ET ajouter le dossier images/ complet (22 fichiers JPG).
+
+INSTALLATION SIMPLE SUR IPHONE : les 22 visuels sont intégrés directement dans index.html. Il suffit de remplacer index.html et sw.js sur GitHub; manifeste.json et LISEZ-MOI.txt peuvent rester tels quels.
