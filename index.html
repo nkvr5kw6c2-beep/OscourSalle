@@ -73,8 +73,19 @@
  <div class="section-head"><h2>Données & réglages</h2><span class="pill">PRIVÉ</span></div>
  <div class="card"><div class="card-title">Poids corporel (facultatif)</div><p class="tiny">Pour suivre l'évolution de ton poids.</p><div class="formrow"><input id="bodyWeight" type="number" min="20" max="350" step=".1" placeholder="Poids en kg"><button class="btn" onclick="saveWeight()">Enregistrer</button></div></div>
  <div class="card"><div class="card-title">Sauvegarde</div><p class="tiny">Exporte régulièrement tes données pour garder une copie de tes séances.</p><div class="row" style="flex-wrap:wrap"><button class="btn full" onclick="exportData()">Exporter mes données ↓</button><label class="btn secondary full" style="text-align:center">Importer une sauvegarde ↑<input id="importFile" type="file" accept=".json,application/json" hidden onchange="importData(event)"></label></div></div>
+
+ <div class="card" id="cloudAccountCard"><div class="card-title">Synchronisation cloud · Supabase</div>
+ <p class="tiny">Connecte-toi avec ton adresse e-mail pour retrouver tes séances sur plusieurs appareils. Tes données restent aussi enregistrées sur cet appareil.</p>
+ <div id="cloudStatus" class="report-item">☁️ Vérification de la connexion…</div>
+ <div id="cloudAuthForm">
+  <div class="formrow" style="margin:8px 0"><input id="cloudEmail" type="email" autocomplete="email" placeholder="Adresse e-mail"><input id="cloudPassword" type="password" autocomplete="current-password" placeholder="Mot de passe"></div>
+  <div class="row" style="flex-wrap:wrap"><button class="btn" onclick="cloudSignIn()">Se connecter</button><button class="btn secondary" onclick="cloudSignUp()">Créer un compte</button></div>
+ </div>
+ <div id="cloudSignedIn" style="display:none"><button class="btn secondary" onclick="cloudSyncNow()">Synchroniser maintenant ↻</button> <button class="btn ghost" onclick="cloudSignOut()">Se déconnecter</button></div>
+ <p class="tiny">Conseil : crée un compte avec un e-mail auquel tu as accès. Si Supabase demande une confirmation, valide l'e-mail avant de te connecter.</p>
+ </div>
  <div class="card"><div class="card-title">Effacer les données locales</div><p class="tiny">Cette action supprime tes séances, tes brouillons et ton historique de poids sur ce navigateur.</p><button class="btn ghost full" onclick="resetData()">Réinitialiser les données</button></div>
- <div class="footer">IRON LOG · Les données ne se synchronisent pas automatiquement entre appareils.</div>
+ <div class="footer">IRON LOG · Les données sont enregistrées localement et synchronisées au cloud lorsque tu es connecté.</div>
 </section>
 </div>
 <nav class="nav"><div class="nav-inner">
@@ -85,7 +96,11 @@
 <button data-page="coach" onclick="go('coach')"><span class="ico">✦</span>Bilan</button>
 </div></nav>
 
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <script>
+const SUPABASE_URL="https://xwqvsvedmvtajoomjgar.supabase.co";
+const SUPABASE_PUBLIC_KEY="sb_publishable_IREnfYKkpyQU3xq-vzP_dQ_Nk-iKAp4";
+const supabaseClient=window.supabase?.createClient(SUPABASE_URL,SUPABASE_PUBLIC_KEY,{auth:{persistSession:true,autoRefreshToken:true,detectSessionInUrl:true}});
 const PROGRAM=[
 {id:"dos",name:"Dos + biceps",day:"JOUR 01",duration:"70–85 min",exercises:[["Tirage vertical",3,"8–12","2 min"],["Rowing poitrine appuyée",3,"8–12","2 min"],["Rowing poulie basse",2,"10–12","2 min"],["Curl incliné haltères",3,"8–12","60–90 s"],["Curl pupitre barre EZ",3,"8–12","60–90 s"],["Curl marteau",2,"10–15","60–90 s"]]},
 {id:"pecs",name:"Pectoraux + triceps",day:"JOUR 02",duration:"60–75 min",exercises:[["Développé incliné haltères",3,"6–10","2–3 min"],["Développé couché",3,"8–10","2–3 min"],["Écartés à la poulie",2,"12–15","60–90 s"],["Extension triceps à la corde",3,"10–15","60–90 s"],["Extension triceps au-dessus de la tête",3,"10–15","60–90 s"]]},
@@ -153,7 +168,19 @@ function blankState(){return {logs:[],drafts:{},weight:[]}}
 function loadState(){try{let x=JSON.parse(localStorage.getItem(KEY));if(x&&Array.isArray(x.logs))return x;}catch(e){}return blankState()}
 let state=loadState(),current="dos",libraryFilter="Tous";
 initNutritionSuggestion();
-function saveState(){localStorage.setItem(KEY,JSON.stringify(state));renderHome();renderCoach();updateStats()}
+let cloudUser=null,cloudSyncBusy=false,cloudSyncTimer=null;
+function setCloudStatus(message){let el=document.getElementById("cloudStatus");if(el)el.textContent=message}
+function paintCloudAuth(){let signed=!!cloudUser;let form=document.getElementById("cloudAuthForm"),out=document.getElementById("cloudSignedIn");if(form)form.style.display=signed?"none":"block";if(out)out.style.display=signed?"block":"none";if(signed)setCloudStatus("Connecté : "+cloudUser.email+" · synchronisation activée");else if(supabaseClient)setCloudStatus("Non connecté · données conservées sur cet appareil");else setCloudStatus("Connexion cloud indisponible : recharge la page avec Internet.")}
+function mergeCloudStates(local,remote){const logs=[...(remote.logs||[])];const ids=new Set(logs.map(x=>String(x.id)+"|"+String(x.date)+"|"+String(x.sessionName)));for(const item of (local.logs||[])){const k=String(item.id)+"|"+String(item.date)+"|"+String(item.sessionName);if(!ids.has(k)){logs.push(item);ids.add(k)}}return {logs:logs.sort((a,b)=>new Date(a.date)-new Date(b.date)),drafts:{...(remote.drafts||{}),...(local.drafts||{})},weight:[...(remote.weight||[]),...(local.weight||[])].filter((x,i,a)=>a.findIndex(y=>y.date===x.date&&y.kg===x.kg)===i)}}
+async function cloudWriteState(){if(!cloudUser||!supabaseClient||cloudSyncBusy)return;cloudSyncBusy=true;try{const {error}=await supabaseClient.from("user_app_state").upsert({user_id:cloudUser.id,app_state:state,updated_at:new Date().toISOString()},{onConflict:"user_id"});if(error)throw error;setCloudStatus("☁️ Synchronisé · "+new Date().toLocaleTimeString("fr-FR",{hour:"2-digit",minute:"2-digit"}))}catch(e){setCloudStatus("⚠️ Synchronisation échouée. Tes données restent sur cet appareil.");console.error("IRON LOG cloud sync:",e.message)}finally{cloudSyncBusy=false}}
+function scheduleCloudSync(){if(!cloudUser)return;clearTimeout(cloudSyncTimer);cloudSyncTimer=setTimeout(()=>cloudWriteState(),700)}
+async function cloudSyncNow(){if(!cloudUser)return;setCloudStatus("Synchronisation en cours…");await cloudWriteState()}
+async function cloudHandleSession(session){cloudUser=session?.user||null;paintCloudAuth();if(!cloudUser)return;setCloudStatus("Récupération des données cloud…");try{const {data,error}=await supabaseClient.from("user_app_state").select("app_state").eq("user_id",cloudUser.id).maybeSingle();if(error)throw error;const local=state;if(data?.app_state&&Array.isArray(data.app_state.logs)){const remote=data.app_state;const localHas=(local.logs||[]).length||(Object.keys(local.drafts||{}).length)||(local.weight||[]).length;let choice="CLOUD";if(localHas){choice=prompt("Des données existent sur cet iPhone et dans le cloud. Tape CLOUD pour utiliser les données cloud, FUSION pour réunir les deux, ou LOCAL pour envoyer les données de cet iPhone vers le cloud.")||"CLOUD";choice=choice.trim().toUpperCase()}if(choice==="LOCAL"){await cloudWriteState()}else if(choice==="FUSION"){state=mergeCloudStates(local,remote);localStorage.setItem(KEY,JSON.stringify(state));renderHome();renderWorkout();renderCoach();updateStats();await cloudWriteState()}else{state=remote;localStorage.setItem(KEY,JSON.stringify(state));renderHome();renderWorkout();renderCoach();updateStats();setCloudStatus("Données cloud chargées sur cet appareil.")}}else{await cloudWriteState();setCloudStatus("Première sauvegarde envoyée vers le cloud.")}}catch(e){setCloudStatus("⚠️ Impossible de lire le cloud. Vérifie la table SQL et ses règles RLS.");console.error("IRON LOG cloud load:",e.message)}}
+async function cloudSignIn(){if(!supabaseClient)return alert("Connexion Supabase indisponible.");const email=document.getElementById("cloudEmail").value.trim(),password=document.getElementById("cloudPassword").value;if(!email||!password)return alert("Renseigne ton e-mail et ton mot de passe.");setCloudStatus("Connexion…");const {data,error}=await supabaseClient.auth.signInWithPassword({email,password});if(error){setCloudStatus("Connexion impossible.");return alert("Connexion impossible : "+error.message)}await cloudHandleSession(data.session)}
+async function cloudSignUp(){if(!supabaseClient)return alert("Connexion Supabase indisponible.");const email=document.getElementById("cloudEmail").value.trim(),password=document.getElementById("cloudPassword").value;if(!email||!password)return alert("Renseigne ton e-mail et un mot de passe.");if(password.length<8)return alert("Choisis un mot de passe d'au moins 8 caractères.");setCloudStatus("Création du compte…");const {data,error}=await supabaseClient.auth.signUp({email,password});if(error){setCloudStatus("Création du compte impossible.");return alert("Création impossible : "+error.message)}if(data.session){await cloudHandleSession(data.session)}else{setCloudStatus("Compte créé. Vérifie ta boîte e-mail pour confirmer l'adresse, puis connecte-toi.");alert("Compte créé ! Si la confirmation e-mail est activée, valide le message reçu avant de te connecter.")}}
+async function cloudSignOut(){if(!supabaseClient)return;const {error}=await supabaseClient.auth.signOut();if(error)return alert("Déconnexion impossible : "+error.message);cloudUser=null;paintCloudAuth()}
+if(supabaseClient){supabaseClient.auth.getSession().then(({data})=>cloudHandleSession(data.session));supabaseClient.auth.onAuthStateChange((event,session)=>{if(event==="SIGNED_OUT"){cloudUser=null;paintCloudAuth()}else if(event==="SIGNED_IN"&&session?.user){cloudUser=session.user;paintCloudAuth()}})}
+function saveState(){localStorage.setItem(KEY,JSON.stringify(state));renderHome();renderCoach();updateStats();scheduleCloudSync()}
 function weekStart(d=new Date()){let x=new Date(d);x.setHours(0,0,0,0);x.setDate(x.getDate()-((x.getDay()+6)%7));return x}
 function thisWeek(date){return new Date(date)>=weekStart()}
 function dateLabel(d){return new Date(d).toLocaleDateString("fr-FR",{day:"2-digit",month:"short"})}
