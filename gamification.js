@@ -7,10 +7,11 @@ const BADGES=[
 {id:"five",name:"Régulier",desc:"Enregistrer 5 séances",icon:"⚡",test:l=>l.length>=5},
 {id:"ten",name:"Machine lancée",desc:"Enregistrer 10 séances",icon:"🔥",test:l=>l.length>=10},
 {id:"twentyfive",name:"Inarrêtable",desc:"Enregistrer 25 séances",icon:"🏆",test:l=>l.length>=25},
-{id:"record",name:"Nouveau record",desc:"Améliorer une performance enregistrée",icon:"📈",test:l=>l.length>1&&l.some(x=>(x.exercises||[]).some(e=>(e.sets||[]).some(s=>Number(s.kg)>0&&Number(s.reps)>0)))},
+{id:"record",name:"Nouveau record",desc:"Améliorer une performance enregistrée",icon:"📈",test:l=>anyPR(l)},
 {id:"week",name:"Semaine complète",desc:"Réaliser 4 séances sur une semaine",icon:"🗓️",test:l=>{const w={};l.forEach(x=>w[weekKey(x.date)]=(w[weekKey(x.date)]||0)+1);return Object.values(w).some(n=>n>=4)}}
 ];
 let modal=null;
+function anyPR(logs){const best={},ordered=[...(logs||[])].sort((a,b)=>new Date(a.date)-new Date(b.date));let found=false;ordered.forEach(l=>(l.exercises||[]).forEach(e=>(e.sets||[]).forEach(s=>{const v=Number(s.kg)>0&&Number(s.reps)>0?Number(s.kg)*Number(s.reps):0;if(v>(best[e.name]||0))found=true;best[e.name]=Math.max(best[e.name]||0,v)})));return found}
 function ensure(){if(!state.gamification||typeof state.gamification!=="object")state.gamification={};const g=state.gamification;if(!Array.isArray(g.claimedSessionIds))g.claimedSessionIds=[];if(!Array.isArray(g.claimedQuests))g.claimedQuests=[];if(!Array.isArray(g.badges))g.badges=[];if(!g.sessionRewards||typeof g.sessionRewards!=="object")g.sessionRewards={};if(!g.questRewards||typeof g.questRewards!=="object")g.questRewards={};g.xp=Object.values(g.sessionRewards).reduce((n,x)=>n+(Number(x)||0),0)+Object.values(g.questRewards).reduce((n,x)=>n+(Number(x)||0),0);return g}
 function dateKey(d){const x=new Date(d);return isNaN(x)?new Date().toISOString().slice(0,10):x.getFullYear()+"-"+String(x.getMonth()+1).padStart(2,"0")+"-"+String(x.getDate()).padStart(2,"0")}
 function weekKey(d){const x=new Date(d);x.setHours(0,0,0,0);x.setDate(x.getDate()-((x.getDay()+6)%7));return dateKey(x)}
