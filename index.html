@@ -118,6 +118,7 @@ input:focus,select:focus,.search:focus{border-color:#c6f36a!important;box-shadow
  <div id="cloudSignedIn" style="display:none"><button class="btn secondary" onclick="cloudSyncNow()">Synchroniser maintenant ↻</button> <button class="btn ghost" onclick="cloudSignOut()">Se déconnecter</button></div>
  <p class="tiny">La connexion Google doit être activée dans les réglages d’authentification de Supabase.</p>
  </div>
+ <div class="card"><div class="card-title">Gérer les séances enregistrées</div><p class="tiny">Supprime une séance de l’historique. Les XP associés à cette séance seront retirés du suivi des récompenses afin de ne pas conserver les points d’une séance supprimée.</p><div id="savedSessionsManager"></div></div>
  <div class="card"><div class="card-title">Effacer les données locales</div><p class="tiny">Cette action supprime tes séances, tes brouillons et ton historique de poids sur ce navigateur.</p><button class="btn ghost full" onclick="resetData()">Réinitialiser les données</button></div>
  <div class="footer">IRON LOG · Les données sont enregistrées localement et synchronisées au cloud lorsque tu es connecté.</div>
 </section>
@@ -221,7 +222,7 @@ function saveState(){localStorage.setItem(KEY,JSON.stringify(state));renderHome(
 function weekStart(d=new Date()){let x=new Date(d);x.setHours(0,0,0,0);x.setDate(x.getDate()-((x.getDay()+6)%7));return x}
 function thisWeek(date){return new Date(date)>=weekStart()}
 function dateLabel(d){return new Date(d).toLocaleDateString("fr-FR",{day:"2-digit",month:"short"})}
-function go(page){document.querySelectorAll(".page").forEach(p=>p.classList.toggle("active",p.id==="page-"+page));document.querySelectorAll(".nav button").forEach(b=>b.classList.toggle("active",b.dataset.page===page));if(page==="workout")renderWorkout();if(page==="library")renderLibrary();if(page==="nutrition"){document.getElementById("nutritionWeight").value=state.weight.length?state.weight[state.weight.length-1].kg:""}if(page==="coach")renderCoach();if(page==="home")renderHome();if(page==="settings")document.getElementById("bodyWeight").value=state.weight.length?state.weight[state.weight.length-1].kg:"";window.scrollTo(0,0)}
+function go(page){document.querySelectorAll(".page").forEach(p=>p.classList.toggle("active",p.id==="page-"+page));document.querySelectorAll(".nav button").forEach(b=>b.classList.toggle("active",b.dataset.page===page));if(page==="workout")renderWorkout();if(page==="library")renderLibrary();if(page==="nutrition"){document.getElementById("nutritionWeight").value=state.weight.length?state.weight[state.weight.length-1].kg:""}if(page==="coach")renderCoach();if(page==="home")renderHome();if(page==="settings"){document.getElementById("bodyWeight").value=state.weight.length?state.weight[state.weight.length-1].kg:"";renderSavedSessions()}window.scrollTo(0,0)}
 function updateStats(){document.getElementById("weekCount").textContent=Math.min(4,state.logs.filter(l=>thisWeek(l.date)).length)+"/4";document.getElementById("totalCount").textContent=state.logs.length;document.getElementById("exerciseCount").textContent=LIBRARY.length}
 function renderHome(){document.getElementById("homeSessions").innerHTML=PROGRAM.map(s=>`<div class="card"><div class="row between"><div><div class="eyebrow">${s.day} · ${s.duration}</div><div class="card-title" style="margin-top:5px">${s.name}</div><div class="sub">${s.exercises.length} exercices</div></div><button class="btn small" onclick="current='${s.id}';go('workout')">Ouvrir →</button></div></div>`).join("");let w=state.logs.filter(l=>thisWeek(l.date));document.getElementById("homeCoach").innerHTML=w.length?`<div class="card-title">${w.length} séance(s) cette semaine</div><p class="tiny">Dernière séance : ${dateLabel(w[w.length-1].date)}. Consulte le bilan pour voir les tendances.</p>`:`<div class="card-title">Ta prochaine séance commence ici.</div><p class="tiny">Tes données apparaîtront ici après ton premier enregistrement.</p>`;updateStats()}
 function getDraft(id){if(!state.drafts[id]){let s=PROGRAM.find(x=>x.id===id);state.drafts[id]={date:new Date().toISOString().slice(0,10),exercises:{}};s.exercises.forEach((e,i)=>state.drafts[id].exercises[i]={sets:Array.from({length:e[1]},()=>({kg:"",reps:"",done:false}))})}return state.drafts[id]}
@@ -288,6 +289,24 @@ function deleteLog(id){let l=state.logs.find(x=>x.id===id);if(!l)return;if(!conf
 function saveWeight(){let v=Number(document.getElementById("bodyWeight").value);if(!v||v<20||v>350){alert("Entre un poids valide en kg.");return}state.weight.push({date:new Date().toISOString(),kg:v});saveState();alert("Poids enregistré.")}
 function exportData(){let backup={app:"IRON LOG",version:1,exportedAt:new Date().toISOString(),data:state};let blob=new Blob([JSON.stringify(backup,null,2)],{type:"application/json"}),url=URL.createObjectURL(blob),a=document.createElement("a");a.href=url;a.download="sauvegarde-iron-log-"+new Date().toISOString().slice(0,10)+".json";document.body.appendChild(a);a.click();a.remove();setTimeout(()=>URL.revokeObjectURL(url),1000);alert("Sauvegarde préparée. Conserve le fichier dans Fichiers ou iCloud Drive.")}
 function importData(e){let f=e.target.files[0];if(!f)return;let r=new FileReader();r.onload=()=>{try{let parsed=JSON.parse(r.result),d=parsed&&parsed.data?parsed.data:parsed;if(!d||!Array.isArray(d.logs)||!d.drafts||typeof d.drafts!=="object"||(d.weight!==undefined&&!Array.isArray(d.weight)))throw Error();if(!confirm("Remplacer les données locales par cette sauvegarde ? Cette action écrasera les données actuelles."))return;state=normalizeGamification({logs:d.logs,drafts:d.drafts||{},weight:Array.isArray(d.weight)?d.weight:[],gamification:d.gamification});saveState();alert("Sauvegarde importée avec succès.")}catch(err){alert("Fichier de sauvegarde invalide ou incompatible. Aucune donnée n’a été remplacée.")}};r.readAsText(f);e.target.value=""}
+function renderSavedSessions(){
+ const el=document.getElementById("savedSessionsManager");if(!el)return;
+ const logs=[...(state.logs||[])].sort((a,b)=>new Date(b.date)-new Date(a.date));
+ if(!logs.length){el.innerHTML='<p class="tiny">Aucune séance enregistrée pour le moment.</p>';return}
+ el.innerHTML=logs.map(l=>'<div class="report-item" style="display:flex;align-items:center;justify-content:space-between;gap:10px"><div style="min-width:0"><b>'+esc(l.sessionName||"Séance")+'</b><div class="tiny">'+dateLabel(l.date)+' · '+(l.exercises||[]).reduce((n,e)=>n+(e.sets||[]).length,0)+' séries</div></div><button class="btn ghost small" onclick="deleteSavedSession(\''+String(l.id).replaceAll("'","\\'")+'\')">Supprimer</button></div>').join("");
+}
+function deleteSavedSession(id){
+ const log=state.logs.find(l=>String(l.id)===String(id));if(!log)return;
+ if(!confirm('Supprimer définitivement la séance « '+(log.sessionName||"Séance")+' » du '+dateLabel(log.date)+' ? Les récompenses XP associées seront annulées.'))return;
+ state.logs=state.logs.filter(l=>String(l.id)!==String(id));
+ const g=state.gamification||(state.gamification={claimedSessionIds:[],claimedQuests:[],badges:[],sessionRewards:{},questRewards:{},pendingSessionId:null});
+ g.claimedSessionIds=(g.claimedSessionIds||[]).filter(x=>String(x)!==String(id));
+ if(g.sessionRewards)delete g.sessionRewards[String(id)];
+ if(String(g.pendingSessionId)===String(id))g.pendingSessionId=null;
+ saveState();renderSavedSessions();
+ const el=document.getElementById("savedSessionsManager");
+ if(el){const notice=document.createElement("p");notice.className="tiny";notice.style.color="var(--green)";notice.textContent="↗ Séance supprimée. Les XP de cette séance ne sont plus comptabilisés.";el.prepend(notice)}
+}
 function resetData(){if(!confirm("Effacer toutes les séances, brouillons et mesures de poids ?"))return;state=blankState();localStorage.setItem(KEY,JSON.stringify(state));renderHome();renderCoach();go("home")}
 if("serviceWorker"in navigator){window.addEventListener("load",()=>navigator.serviceWorker.register("./sw.js").catch(()=>{}))}
 renderHome();renderWorkout();renderLibrary();renderCoach();updateStats();
