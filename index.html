@@ -113,7 +113,8 @@ input:focus,select:focus,.search:focus{border-color:#c6f36a!important;box-shadow
  <div id="cloudStatus" class="report-item"><div id="cloudStatusLine" class="cloud-status-line"><span class="cloud-spinner"></span><span id="cloudStatusText">Vérification de la connexion…</span></div><div class="tiny" style="margin-top:7px"><span class="cloud-live-dot"></span>Actualisation cloud en temps réel lorsque connecté</div></div>
  <div id="cloudAuthForm">
   <p class="sub" style="margin:8px 0 12px">Connecte-toi pour synchroniser tes séances sur tes appareils.</p>
-  <button class="btn full" onclick="cloudSignInApple()"> Continuer avec Apple</button>
+  <button class="btn full" type="button" disabled title="Apple Developer requis" style="opacity:.58;cursor:not-allowed"> Connexion Apple indisponible</button>
+  <p class="tiny" style="margin:6px 0 10px">La connexion Apple sera activée lorsque la configuration Apple Developer sera disponible. En attendant, utilise Google si celui-ci est configuré dans Supabase.</p>
   <button class="btn secondary full" style="margin-top:8px" onclick="cloudSignInGoogle()">🌐 Continuer avec Google</button>
  </div>
  <div id="cloudSignedIn" style="display:none"><button class="btn secondary" onclick="cloudSyncNow()">Synchroniser maintenant ↻</button> <button class="btn ghost" onclick="cloudSignOut()">Se déconnecter</button></div>
