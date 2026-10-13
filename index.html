@@ -101,7 +101,7 @@
 <script>
 const SUPABASE_URL="https://xwqvsvedmvtajoomjgar.supabase.co";
 const SUPABASE_PUBLIC_KEY="sb_publishable_IREnfYKkpyQU3xq-vzP_dQ_Nk-iKAp4";
-const supabaseClient=window.supabase?.createClient(SUPABASE_URL,SUPABASE_PUBLIC_KEY,{auth:{persistSession:true,autoRefreshToken:true,detectSessionInUrl:true}});
+const supabaseClient=window.supabase?.createClient(SUPABASE_URL,SUPABASE_PUBLIC_KEY,{auth:{persistSession:true,autoRefreshToken:true,detectSessionInUrl:true,flowType:"implicit"}});
 const PROGRAM=[
 {id:"dos",name:"Dos + biceps",day:"JOUR 01",duration:"70–85 min",exercises:[["Tirage vertical",3,"8–12","2 min"],["Rowing poitrine appuyée",3,"8–12","2 min"],["Rowing poulie basse",2,"10–12","2 min"],["Curl incliné haltères",3,"8–12","60–90 s"],["Curl pupitre barre EZ",3,"8–12","60–90 s"],["Curl marteau",2,"10–15","60–90 s"]]},
 {id:"pecs",name:"Pectoraux + triceps",day:"JOUR 02",duration:"60–75 min",exercises:[["Développé incliné haltères",3,"6–10","2–3 min"],["Développé couché",3,"8–10","2–3 min"],["Écartés à la poulie",2,"12–15","60–90 s"],["Extension triceps à la corde",3,"10–15","60–90 s"],["Extension triceps au-dessus de la tête",3,"10–15","60–90 s"]]},
