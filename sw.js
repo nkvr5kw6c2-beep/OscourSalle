@@ -1,4 +1,4 @@
-const CACHE_NAME = "iron-log-v5";
+const CACHE_NAME = "iron-log-v6";
 const FILES = ["./", "./index.html", "./manifeste.json"];
 self.addEventListener("install", event => {
   event.waitUntil(caches.open(CACHE_NAME).then(cache => cache.addAll(FILES)).then(() => self.skipWaiting()));
