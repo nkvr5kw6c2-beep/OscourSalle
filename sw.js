@@ -42,8 +42,6 @@ self.addEventListener("push", event => {
     tag: typeof payload.tag === "string" ? payload.tag : "iron-log-push",
     renotify: Boolean(payload.renotify),
     data: { url: typeof payload.url === "string" ? payload.url : "./" },
-    icon: "./icone-192.png",
-    badge: "./icone-192.png"
   };
   event.waitUntil(self.registration.showNotification(title, options));
 });
