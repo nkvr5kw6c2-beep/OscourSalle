@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
-<meta name="theme-color" content="#111111">
+<meta name="theme-color" content="#0a0a0a">
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
 <meta name="apple-mobile-web-app-title" content="IRON LOG">
@@ -79,6 +79,88 @@ input,select,textarea{background:#171717!important;border:1px solid #414141!impo
 #page-coach .report-item{border-bottom:1px solid #303030;padding:10px 0}
 #page-coach .report-item:last-child{border-bottom:0}
 @media(max-width:390px){.wrap{padding-left:11px;padding-right:11px}h1{font-size:26px}.nav button{font-size:9px}}
+
+/* IRON LOG · Modèle 02 — Black & Gold dashboard */
+:root{color-scheme:dark;--bg:#090909;--panel:#141414;--panel2:#1c1c1c;--line:#303030;--text:#f5f2e9;--muted:#a5a095;--orange:#d6b15e;--orange-soft:#302713;--green:#d6b15e;--red:#f07862;--gold:#d6b15e;--gold-bright:#f0d28b;--gold-dim:#8e7137}
+body{background:radial-gradient(ellipse at 50% -15%,#292319 0%,#10100f 38%,var(--bg) 72%);padding-bottom:calc(88px + env(safe-area-inset-bottom))}
+.wrap{max-width:680px;padding:17px 15px calc(32px + env(safe-area-inset-bottom))}
+.brand{color:var(--gold-bright)}
+h1,h2,.card-title,.exercise-name{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;letter-spacing:-.35px;text-transform:none}
+h1{font-size:28px;font-weight:900}
+.hero{background:linear-gradient(135deg,#282116,#141311 72%);border:1px solid #5b4825;border-left:3px solid var(--gold);border-radius:18px}
+.card,.exercise,.nutrition-tile,.stat-tile,.chart-wrap{background:linear-gradient(145deg,#181817,#111110);border-color:#302e28;border-radius:15px;box-shadow:0 8px 24px rgba(0,0,0,.18)}
+.btn:not(.secondary):not(.ghost):not(.danger){background:linear-gradient(135deg,#f0d28b,#c29a43);color:#17130a}
+.btn,.filter,.tab{border-radius:10px}
+.btn.secondary,.filter,.tab{background:#1b1a17;border-color:#39352b}
+.filter.active,.tab.active{background:#302713;border-color:var(--gold);color:var(--gold-bright)}
+.pill{background:#282115;border-color:#554322;color:var(--gold-bright);border-radius:30px}
+.eyebrow{color:#b7b0a1;letter-spacing:1.5px}
+.progress span,.warmup-progress span{background:var(--gold)}
+.done input{accent-color:var(--gold)}
+input:focus,select:focus,.search:focus{border-color:var(--gold)!important;box-shadow:0 0 0 2px #d6b15e20}
+.timer-card,.daily-suggestion,.warmup-card{border-color:#594724;background:linear-gradient(135deg,#282216,#151411)}
+.warmup-item input{accent-color:var(--gold)}
+.warmup-time,.record-line b,.stat b{color:var(--gold-bright)}
+.nav{background:rgba(10,10,10,.94);border-top:1px solid #353027;backdrop-filter:blur(22px);padding:8px 9px calc(8px + env(safe-area-inset-bottom))}
+.nav-inner{max-width:620px;grid-template-columns:repeat(6,minmax(0,1fr));gap:3px}
+.nav button{display:flex;flex-direction:column;align-items:center;justify-content:center;min-height:52px;padding:5px 1px;border-radius:12px;font-size:9px;letter-spacing:-.1px}
+.nav button.active{color:var(--gold-bright);background:linear-gradient(180deg,#302713,#211b10);box-shadow:inset 0 0 0 1px #d6b15e38}
+.nav .ico{font-size:19px;margin-bottom:3px;line-height:1}
+#page-coach .hero{background:linear-gradient(135deg,#282116,#141311 75%);border-color:#594724;border-left:3px solid var(--gold)}
+#page-coach .hero .eyebrow{color:var(--gold-bright)}
+#page-coach .hero h2{font-size:26px}
+#page-coach .report-item{border-bottom-color:#302e28}
+.exercise .art{background:#211e17;border:1px solid #373024}
+.exercise .tip{border-left-color:var(--gold)}
+/* Dashboard home */
+.dashboard-head{display:flex;justify-content:space-between;align-items:center;gap:12px;padding:5px 1px 15px}
+.dashboard-head h2{margin:5px 0 0;font-size:25px;font-weight:950;letter-spacing:-.9px}
+.dashboard-date{font-size:12px;color:var(--muted);margin:6px 0 0}
+.gold-mark{width:48px;height:48px;display:grid;place-items:center;flex:0 0 auto;border-radius:15px;border:1px solid #6d562b;background:linear-gradient(145deg,#302713,#17140e);color:var(--gold-bright);font-weight:950;letter-spacing:-1px;font-size:17px;box-shadow:0 0 28px #d6b15e12}
+.dashboard-hero{position:relative;overflow:hidden;border:1px solid #5c4826;border-radius:19px;padding:18px;background:radial-gradient(ellipse at 100% 0%,#3b2c13 0%,transparent 52%),linear-gradient(135deg,#201c14,#111110 78%);margin-bottom:22px}
+.dashboard-hero:after{content:"";position:absolute;width:160px;height:160px;border:1px solid #d6b15e16;border-radius:50%;right:-74px;top:40px;pointer-events:none}
+.dashboard-hero-top{display:flex;gap:12px;align-items:flex-start;justify-content:space-between}
+.dashboard-hero h2{font-size:23px;font-weight:900;letter-spacing:-.7px;margin:8px 0 6px;max-width:300px}
+.dashboard-hero p{font-size:12px;line-height:1.55;color:#c3bdae;margin:0 0 16px;max-width:330px}
+.gold-text{color:var(--gold-bright)}
+.hero-emblem{width:43px;height:43px;display:grid;place-items:center;border-radius:13px;border:1px solid #6d562b;color:var(--gold-bright);font-size:22px;flex:0 0 auto}
+.dashboard-hero>.btn{width:100%;display:flex;align-items:center;justify-content:space-between;padding:13px 14px}
+.hero-foot{display:flex;justify-content:space-between;gap:10px;flex-wrap:wrap;margin-top:15px;color:#a9a18f;font-size:9px;font-weight:850;letter-spacing:.7px}
+.live-dot{display:inline-block;width:6px;height:6px;border-radius:50%;background:var(--gold-bright);margin:0 5px 1px 0;box-shadow:0 0 9px #d6b15e66}
+.dashboard-section-head{margin:0 0 11px}
+.dashboard-section-head h2{font-size:17px;font-weight:850;letter-spacing:-.3px}
+.dashboard-metrics{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:9px;margin-bottom:24px}
+.metric-card{min-width:0;border:1px solid #302e28;border-radius:15px;padding:13px;background:linear-gradient(145deg,#191918,#111110)}
+.metric-feature{background:radial-gradient(ellipse at 100% 0%,#332a18,transparent 65%),linear-gradient(145deg,#211d15,#111110);border-color:#5b4827}
+.metric-label{display:flex;align-items:center;gap:6px;color:#b5ad9e;font-size:9px;font-weight:850;letter-spacing:.45px;line-height:1.35}
+.metric-icon{display:inline-grid;place-items:center;width:20px;height:20px;border-radius:7px;background:#2a2418;color:var(--gold-bright);font-size:12px}
+.metric-value{font-size:27px;font-weight:950;letter-spacing:-1px;margin-top:13px;color:#f7f2e7;font-variant-numeric:tabular-nums;overflow-wrap:anywhere}
+.metric-feature .metric-value{color:var(--gold-bright)}
+.metric-value small{font-size:10px;letter-spacing:0;color:#aaa291;font-weight:750}
+.metric-foot{font-size:10px;color:#9f998d;margin-top:5px;line-height:1.4}
+.metric-track{height:4px;background:#393225;border-radius:10px;overflow:hidden;margin-top:12px}
+.metric-track span{display:block;height:100%;width:0;background:linear-gradient(90deg,#a88235,#f0d28b);border-radius:10px;transition:width .25s ease}
+.dashboard-split>.section-head:not(:first-child){margin-top:23px}
+#homeSessions .card{padding:13px;margin-bottom:8px}
+#homeSessions .card-title{font-size:14px;font-weight:850}
+#homeSessions .btn{white-space:nowrap}
+.activity-card{margin-bottom:0}
+.activity-entry{display:flex;align-items:center;gap:10px;padding:9px 0;border-bottom:1px solid #2a2925}
+.activity-entry:last-child{border-bottom:0}
+.activity-symbol{width:35px;height:35px;flex:0 0 auto;border-radius:11px;display:grid;place-items:center;background:#2a2418;border:1px solid #4a3a20;color:var(--gold-bright);font-size:15px}
+.activity-copy{flex:1;min-width:0}
+.activity-copy b{display:block;font-size:12px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.activity-copy small{display:block;color:var(--muted);font-size:10px;margin-top:4px}
+.activity-empty{padding:13px 2px;color:var(--muted);font-size:12px;line-height:1.5}
+.library-launch{width:100%;display:flex;align-items:center;gap:11px;text-align:left;padding:13px;border:1px solid #3b3528;border-radius:15px;background:linear-gradient(135deg,#1c1a15,#121211);color:var(--text)}
+.library-launch-icon{width:39px;height:39px;display:grid;place-items:center;border-radius:12px;background:#302713;color:var(--gold-bright);font-size:19px}
+.library-launch b{display:block;font-size:12px}
+.library-launch small{display:block;color:var(--muted);font-size:10px;margin-top:4px;line-height:1.4}
+.launch-arrow{margin-left:auto;color:var(--gold-bright);font-size:19px}
+#homeCoach{margin-bottom:0}
+@media(max-width:390px){.wrap{padding-left:11px;padding-right:11px}.dashboard-head h2{font-size:22px}.dashboard-hero{padding:15px}.dashboard-hero h2{font-size:21px}.metric-card{padding:11px}.metric-label{font-size:8px}.metric-value{font-size:24px}.nav button{font-size:8px}}
+@media(prefers-reduced-motion:reduce){.metric-track span{transition:none}}
+
 </style>
 </head>
 <body>
@@ -86,10 +168,21 @@ input,select,textarea{background:#171717!important;border:1px solid #414141!impo
 <header class="top"><div><div class="brand">IRON LOG · TRAINING</div><h1>Simple. Régulier. <span style="color:var(--orange)">Plus fort.</span></h1></div><div class="avatar">IL</div></header>
 
 <section id="page-home" class="page active">
- <div class="hero"><div class="eyebrow">TON ESPACE MUSCULATION</div><h2>Ta progression, sans prise de tête.</h2><p>Renseigne tes séries, enregistre tes séances et retrouve ton bilan hebdomadaire. Tes données restent dans le navigateur de cet iPhone.</p><button class="btn" onclick="go('workout')">Commencer une séance →</button>
- <div class="stats"><div class="stat"><span>SEMAINE</span><b id="weekCount">0/4</b></div><div class="stat"><span>SÉANCES</span><b id="totalCount">0</b></div><div class="stat"><span>EXERCICES</span><b id="exerciseCount">0</b></div></div></div>
- <div class="section-head"><h2>Mon programme</h2><span class="pill">4 JOURS</span></div><div id="homeSessions"></div>
- <div class="section-head"><h2>Dernière analyse du coach</h2><button class="btn ghost small" onclick="go('coach')">Voir le bilan</button></div><div class="card" id="homeCoach"></div>
+ <div class="dashboard-head"><div><div class="eyebrow">IRON LOG · PERFORMANCE</div><h2 class="dashboard-title">TON TABLEAU DE BORD</h2><p class="dashboard-date" id="dashboardDate">Ta progression, séance après séance.</p></div><div class="gold-mark">IL</div></div>
+ <div class="dashboard-hero"><div class="dashboard-hero-top"><div><div class="eyebrow gold-text">OBJECTIF · PRISE DE MASSE</div><h2>Construis ta progression.</h2><p>La régularité fait la différence. Garde le cap, suis tes chiffres et bats tes records.</p></div><div class="hero-emblem">✦</div></div><button class="btn" onclick="go('workout')">LANCER UNE SÉANCE <span aria-hidden="true">↗</span></button><div class="hero-foot"><span><i class="live-dot"></i> 4 SÉANCES AU PROGRAMME</span><span>BLACK & GOLD</span></div></div>
+ <div class="section-head dashboard-section-head"><h2>Vue d'ensemble</h2><span class="pill">TES STATS</span></div>
+ <div class="dashboard-metrics">
+  <div class="metric-card metric-feature"><div class="metric-label"><span class="metric-icon">↗</span> SÉANCES CETTE SEMAINE</div><div class="metric-value" id="weekCount">0/4</div><div class="metric-foot" id="weekCaption">Objectif : 4 séances</div><div class="metric-track"><span id="weekProgressBar"></span></div></div>
+  <div class="metric-card"><div class="metric-label"><span class="metric-icon">▤</span> SÉANCES AU TOTAL</div><div class="metric-value" id="totalCount">0</div><div class="metric-foot">Historique enregistré</div></div>
+  <div class="metric-card"><div class="metric-label"><span class="metric-icon">⌁</span> VOLUME CETTE SEMAINE</div><div class="metric-value"><span id="homeVolume">0</span><small> kg·rép.</small></div><div class="metric-foot">Charge × répétitions</div></div>
+  <div class="metric-card"><div class="metric-label"><span class="metric-icon">◉</span> POIDS ACTUEL</div><div class="metric-value"><span id="homeWeight">—</span><small id="homeWeightUnit"> kg</small></div><div class="metric-foot" id="homeWeightCaption">Ajoute une pesée dans Réglages</div></div>
+ </div>
+ <div class="dashboard-split">
+  <div class="section-head dashboard-section-head"><h2>Ton programme</h2><span class="pill">4 JOURS</span></div><div id="homeSessions"></div>
+  <div class="section-head dashboard-section-head"><h2>Activité récente</h2><button class="btn ghost small" onclick="go('coach')">Voir l'analyse ↗</button></div><div class="card activity-card" id="homeActivity"></div>
+  <div class="section-head dashboard-section-head"><h2>Bibliothèque</h2><span class="sub" id="exerciseCount">0 exercices</span></div><button class="library-launch" onclick="go('library')"><span class="library-launch-icon">▦</span><span><b>Explorer les exercices</b><small>Photos réalistes · conseils · muscles ciblés</small></span><span class="launch-arrow">→</span></button>
+  <div class="section-head dashboard-section-head"><h2>Coach</h2><button class="btn ghost small" onclick="go('coach')">Ouvrir ↗</button></div><div class="card" id="homeCoach"></div>
+ </div>
 </section>
 
 <section id="page-workout" class="page">
@@ -318,7 +411,28 @@ function thisWeek(date){return new Date(date)>=weekStart()}
 function dateLabel(d){return new Date(d).toLocaleDateString("fr-FR",{day:"2-digit",month:"short"})}
 function go(page){document.querySelectorAll(".page").forEach(p=>p.classList.toggle("active",p.id==="page-"+page));document.querySelectorAll(".nav button").forEach(b=>b.classList.toggle("active",b.dataset.page===page));if(page==="workout")renderWorkout();if(page==="library")renderLibrary();if(page==="nutrition"){document.getElementById("nutritionWeight").value=state.weight.length?state.weight[state.weight.length-1].kg:""}if(page==="coach"){renderCoach();refreshPhotoJournal();}if(page==="home")renderHome();if(page==="settings"){document.getElementById("bodyWeight").value=state.weight.length?state.weight[state.weight.length-1].kg:"";renderSavedSessions()}window.scrollTo(0,0)}
 function updateStats(){document.getElementById("weekCount").textContent=Math.min(4,state.logs.filter(l=>thisWeek(l.date)).length)+"/4";document.getElementById("totalCount").textContent=state.logs.length;document.getElementById("exerciseCount").textContent=LIBRARY.length}
-function renderHome(){document.getElementById("homeSessions").innerHTML=PROGRAM.map(s=>`<div class="card"><div class="row between"><div><div class="eyebrow">${s.day} · ${s.duration}</div><div class="card-title" style="margin-top:5px">${s.name}</div><div class="sub">${s.exercises.length} exercices</div></div><button class="btn small" onclick="current='${s.id}';go('workout')">Ouvrir →</button></div></div>`).join("");let w=state.logs.filter(l=>thisWeek(l.date));document.getElementById("homeCoach").innerHTML=w.length?`<div class="card-title">${w.length} séance(s) cette semaine</div><p class="tiny">Dernière séance : ${dateLabel(w[w.length-1].date)}. Consulte le bilan pour voir les tendances.</p>`:`<div class="card-title">Ta prochaine séance commence ici.</div><p class="tiny">Tes données apparaîtront ici après ton premier enregistrement.</p>`;updateStats()}
+function renderHome(){
+ const now=new Date(),dateEl=document.getElementById("dashboardDate");
+ if(dateEl)dateEl.textContent=now.toLocaleDateString("fr-FR",{weekday:"long",day:"numeric",month:"long"});
+ document.getElementById("homeSessions").innerHTML=PROGRAM.map(s=>`<div class="card"><div class="row between"><div><div class="eyebrow">${s.day} · ${s.duration}</div><div class="card-title" style="margin-top:5px">${s.name}</div><div class="sub">${s.exercises.length} exercices</div></div><button class="btn small" onclick="current='${s.id}';go('workout')">Ouvrir →</button></div></div>`).join("");
+ const weekLogs=state.logs.filter(l=>thisWeek(l.date));
+ const weeklyVolume=weekLogs.reduce((sum,log)=>(log.exercises||[]).reduce((total,ex)=>total+(ex.sets||[]).reduce((setTotal,set)=>{const kg=Number(set.kg),reps=Number(set.reps);return setTotal+(kg>0&&reps>0?kg*reps:0)},0),sum),0);
+ const volumeEl=document.getElementById("homeVolume");if(volumeEl)volumeEl.textContent=Math.round(weeklyVolume).toLocaleString("fr-FR");
+ const lastWeight=state.weight&&state.weight.length?state.weight[state.weight.length-1]:null;
+ const weightEl=document.getElementById("homeWeight"),weightCaption=document.getElementById("homeWeightCaption");
+ if(weightEl)weightEl.textContent=lastWeight&&Number(lastWeight.kg)>0?Number(lastWeight.kg).toLocaleString("fr-FR",{maximumFractionDigits:1}):"—";
+ if(weightCaption)weightCaption.textContent=lastWeight?("Dernière pesée · "+dateLabel(lastWeight.date)):"Ajoute une pesée dans Réglages";
+ document.getElementById("homeCoach").innerHTML=weekLogs.length?`<div class="card-title">${weekLogs.length} séance(s) cette semaine</div><p class="tiny">Dernière séance : ${dateLabel(weekLogs[weekLogs.length-1].date)}. Consulte le bilan pour voir tes tendances et tes records.</p>`:`<div class="card-title">Ta prochaine séance commence ici.</div><p class="tiny">Enregistre ta première séance pour alimenter tes statistiques et ton historique.</p>`;
+ const activityEl=document.getElementById("homeActivity");
+ const recent=[...(state.logs||[])].sort((a,b)=>new Date(b.date)-new Date(a.date)).slice(0,3);
+ if(activityEl)activityEl.innerHTML=recent.length?recent.map(log=>`<div class="activity-entry"><div class="activity-symbol">↗</div><div class="activity-copy"><b>${esc(log.sessionName||"Séance")}</b><small>${dateLabel(log.date)} · ${(log.exercises||[]).length} exercices</small></div><span class="launch-arrow">✓</span></div>`).join(""):'<div class="activity-empty">Aucune séance enregistrée pour le moment. Ton activité apparaîtra ici.</div>';
+ updateStats();
+ const weekCount=document.getElementById("weekCount"),weekProgress=document.getElementById("weekProgressBar"),weekCaption=document.getElementById("weekCaption");
+ const completed=Math.min(4,weekLogs.length);
+ if(weekCount)weekCount.textContent=completed+"/4";
+ if(weekProgress)weekProgress.style.width=(completed/4*100)+"%";
+ if(weekCaption)weekCaption.textContent=completed>=4?"Objectif hebdomadaire atteint":"Encore "+(4-completed)+" séance(s) pour atteindre ton objectif";
+}
 function getDraft(id){if(!state.drafts[id]){let s=PROGRAM.find(x=>x.id===id);state.drafts[id]={date:new Date().toISOString().slice(0,10),exercises:{}};s.exercises.forEach((e,i)=>state.drafts[id].exercises[i]={sets:Array.from({length:e[1]},()=>({kg:"",reps:"",done:false}))})}return state.drafts[id]}
 
 const WARMUP_PLANS={
