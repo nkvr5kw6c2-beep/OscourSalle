@@ -186,6 +186,33 @@ button:focus-visible,input:focus-visible,select:focus-visible,textarea:focus-vis
 #ironLogToast{position:fixed;z-index:9999;left:50%;bottom:calc(92px + env(safe-area-inset-bottom));transform:translate(-50%,12px);opacity:0;pointer-events:none;max-width:calc(100vw - 28px);padding:11px 15px;border:1px solid #6d562b;border-radius:13px;background:rgba(20,19,16,.97);color:#f0d28b;box-shadow:0 12px 32px #0008;font-size:12px;font-weight:750;text-align:center;transition:opacity var(--motion-normal) ease,transform var(--motion-normal) ease}
 #ironLogToast.show{opacity:1;transform:translate(-50%,0)}#ironLogToast.warning{border-color:#9d5548;color:#ffb5a8}
 @media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}button,.btn,.tab,.filter,.nav button,#ironLogToast{transition:none!important}}
+
+/* IRON LOG — Graphite Lime refresh (visual-only, storage untouched) */
+:root{--bg:#111416;--panel:#1b2022;--panel2:#252b2e;--line:#343c3f;--text:#f4f7f5;--muted:#a3aeaa;--orange:#b7f52b;--orange-soft:#29351c;--green:#b7f52b;--red:#ff7474;color-scheme:dark}
+html{background:var(--bg);scroll-behavior:smooth}
+body{background:radial-gradient(ellipse at 50% -18%,#293522 0%,var(--bg) 48%);padding-bottom:calc(92px + env(safe-area-inset-bottom))}
+.wrap{max-width:720px;padding:calc(18px + env(safe-area-inset-top)) 16px 30px}
+.brand,.tagline{color:var(--orange)}
+.hero{background:linear-gradient(135deg,#29351f 0%,#1a211c 58%,#171b1c 100%);border-color:#485b30;box-shadow:0 12px 32px #0003}
+.card,.exercise{border-color:#343c3f;box-shadow:0 5px 18px #0002}
+.card{background:linear-gradient(145deg,#202628,#191e20)}
+.btn{background:var(--orange);color:#141810;box-shadow:0 3px 12px #b7f52b20}
+.btn:active,.nav button:active{transform:scale(.98)}
+.btn,.tab,.nav button{transition:background .18s ease,color .18s ease,transform .12s ease,border-color .18s ease}
+.btn.secondary{background:#292f31;border-color:#41494b}
+.btn.ghost{border-color:#41494b}
+.pill{color:#d9ff8d;background:#27341d;border-color:#536a36}
+.progress span{background:linear-gradient(90deg,#91d51d,#c9ff54)}
+.setbox:focus-within{border-color:var(--orange);box-shadow:0 0 0 2px #b7f52b20}
+.art{background:linear-gradient(135deg,#303b2a,#1b2220)}
+.nav{background:rgba(17,20,22,.94);border-top:1px solid #343c3f;backdrop-filter:blur(22px);-webkit-backdrop-filter:blur(22px);padding:8px 8px calc(8px + env(safe-area-inset-bottom))}
+.nav-inner{max-width:680px;gap:3px}
+.nav button{border-radius:12px;min-height:48px;color:#9da7a3}
+.nav button.active{background:#29351c;color:#c8ff54;box-shadow:inset 0 0 0 1px #b7f52b28}
+.nav .ico{display:block;font-size:17px;line-height:1.1;margin-bottom:3px}
+button:focus-visible,input:focus-visible,select:focus-visible{outline:2px solid var(--orange);outline-offset:2px}
+@media(prefers-reduced-motion:reduce){*,*::before,*::after{scroll-behavior:auto!important;transition:none!important;animation:none!important}}
+
 </style>
 </head>
 <body>
