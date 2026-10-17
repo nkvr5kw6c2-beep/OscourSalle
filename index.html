@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
-<meta name="theme-color" content="#0a0a0a">
+<meta name="theme-color" content="#111416">
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
 <meta name="apple-mobile-web-app-title" content="IRON LOG">
@@ -102,7 +102,7 @@ input:focus,select:focus,.search:focus{border-color:var(--gold)!important;box-sh
 .warmup-item input{accent-color:var(--gold)}
 .warmup-time,.record-line b,.stat b{color:var(--gold-bright)}
 .nav{background:rgba(10,10,10,.94);border-top:1px solid #353027;backdrop-filter:blur(22px);padding:8px 9px calc(8px + env(safe-area-inset-bottom))}
-.nav-inner{max-width:620px;grid-template-columns:repeat(6,minmax(0,1fr));gap:3px}
+.nav-inner{max-width:620px;grid-template-columns:repeat(7,minmax(0,1fr));gap:3px}
 .nav button{display:flex;flex-direction:column;align-items:center;justify-content:center;min-height:52px;padding:5px 1px;border-radius:12px;font-size:9px;letter-spacing:-.1px}
 .nav button.active{color:var(--gold-bright);background:linear-gradient(180deg,#302713,#211b10);box-shadow:inset 0 0 0 1px #d6b15e38}
 .nav .ico{font-size:19px;margin-bottom:3px;line-height:1}
@@ -186,6 +186,68 @@ button:focus-visible,input:focus-visible,select:focus-visible,textarea:focus-vis
 #ironLogToast{position:fixed;z-index:9999;left:50%;bottom:calc(92px + env(safe-area-inset-bottom));transform:translate(-50%,12px);opacity:0;pointer-events:none;max-width:calc(100vw - 28px);padding:11px 15px;border:1px solid #6d562b;border-radius:13px;background:rgba(20,19,16,.97);color:#f0d28b;box-shadow:0 12px 32px #0008;font-size:12px;font-weight:750;text-align:center;transition:opacity var(--motion-normal) ease,transform var(--motion-normal) ease}
 #ironLogToast.show{opacity:1;transform:translate(-50%,0)}#ironLogToast.warning{border-color:#9d5548;color:#ffb5a8}
 @media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}button,.btn,.tab,.filter,.nav button,#ironLogToast{transition:none!important}}
+
+/* IRON LOG — Graphite Lime refresh (visual-only, storage untouched) */
+:root{--bg:#111416;--panel:#1b2022;--panel2:#252b2e;--line:#343c3f;--text:#f4f7f5;--muted:#a3aeaa;--orange:#b7f52b;--orange-soft:#29351c;--green:#b7f52b;--red:#ff7474;color-scheme:dark}
+html{background:var(--bg);scroll-behavior:smooth}
+body{background:radial-gradient(ellipse at 50% -18%,#293522 0%,var(--bg) 48%);padding-bottom:calc(92px + env(safe-area-inset-bottom))}
+.wrap{max-width:720px;padding:calc(18px + env(safe-area-inset-top)) 16px 30px}
+.brand,.tagline{color:var(--orange)}
+.hero{background:linear-gradient(135deg,#29351f 0%,#1a211c 58%,#171b1c 100%);border-color:#485b30;box-shadow:0 12px 32px #0003}
+.card,.exercise{border-color:#343c3f;box-shadow:0 5px 18px #0002}
+.card{background:linear-gradient(145deg,#202628,#191e20)}
+.btn{background:var(--orange);color:#141810;box-shadow:0 3px 12px #b7f52b20}
+.btn:active,.nav button:active{transform:scale(.98)}
+.btn,.tab,.nav button{transition:background .18s ease,color .18s ease,transform .12s ease,border-color .18s ease}
+.btn.secondary{background:#292f31;border-color:#41494b}
+.btn.ghost{border-color:#41494b}
+.pill{color:#d9ff8d;background:#27341d;border-color:#536a36}
+.progress span{background:linear-gradient(90deg,#91d51d,#c9ff54)}
+.setbox:focus-within{border-color:var(--orange);box-shadow:0 0 0 2px #b7f52b20}
+.art{background:linear-gradient(135deg,#303b2a,#1b2220)}
+.nav{background:rgba(17,20,22,.94);border-top:1px solid #343c3f;backdrop-filter:blur(22px);-webkit-backdrop-filter:blur(22px);padding:8px 8px calc(8px + env(safe-area-inset-bottom))}
+.nav-inner{max-width:680px;gap:3px}
+.nav button{border-radius:12px;min-height:48px;color:#9da7a3}
+.nav button.active{background:#29351c;color:#c8ff54;box-shadow:inset 0 0 0 1px #b7f52b28}
+.nav .ico{display:block;font-size:17px;line-height:1.1;margin-bottom:3px}
+button:focus-visible,input:focus-visible,select:focus-visible{outline:2px solid var(--orange);outline-offset:2px}
+@media(prefers-reduced-motion:reduce){*,*::before,*::after{scroll-behavior:auto!important;transition:none!important;animation:none!important}}
+
+
+/* Dashboard Graphite Lime — final visual pass */
+.dashboard-head{padding-top:4px}
+.dashboard-head h2,.dashboard-title{font-size:clamp(22px,6vw,28px);letter-spacing:-1px}
+.dashboard-date{color:#aab4ae}
+.gold-mark{border-color:#526b30;background:linear-gradient(145deg,#2d3b20,#1b211b);color:#c8ff54;box-shadow:0 0 24px #b7f52b12}
+.dashboard-hero{border-color:#465a31;background:radial-gradient(ellipse at 100% 0%,#344823 0%,transparent 55%),linear-gradient(135deg,#202a1b,#151a17 78%);box-shadow:0 12px 30px #0003}
+.dashboard-hero:after{border-color:#b7f52b18}
+.dashboard-hero h2{font-size:clamp(21px,5.5vw,25px);line-height:1.13}
+.dashboard-hero p{color:#c1cbc2}
+.gold-text{color:#c8ff54}
+.hero-emblem{border-color:#526b30;background:#27351d;color:#c8ff54}
+.hero-foot{color:#aab5a6}
+.live-dot{background:#b7f52b;box-shadow:0 0 9px #b7f52670}
+.dashboard-section-head h2{letter-spacing:-.4px}
+.dashboard-metrics{gap:10px}
+.metric-card{border-color:#333d3c;background:linear-gradient(145deg,#202729,#171c1e);box-shadow:0 5px 16px #0002}
+.metric-feature{border-color:#4c6033;background:radial-gradient(ellipse at 100% 0%,#2b3a20,transparent 65%),linear-gradient(145deg,#20291c,#171b19)}
+.metric-label{color:#b5c0b9}
+.metric-icon{background:#2a3820;color:#c8ff54}
+.metric-value{color:#f4f7f5}
+.metric-feature .metric-value{color:#c8ff54}
+.metric-value small,.metric-foot{color:#a4b0a8}
+.metric-track{background:#353e3a}
+.metric-track span{background:linear-gradient(90deg,#8bd51d,#c8ff54)}
+.activity-entry{border-bottom-color:#303938}
+.activity-symbol{background:#29351f;border-color:#465b30;color:#c8ff54}
+.library-launch{border-color:#354237;background:linear-gradient(135deg,#202821,#171c19)}
+.library-launch-icon{background:#29351f;color:#c8ff54}
+.launch-arrow{color:#c8ff54}
+#homeSessions .card{background:linear-gradient(145deg,#202729,#191e20)}
+.nav button{font-size:clamp(8px,2.35vw,10px);min-height:50px}
+@media(min-width:560px){.dashboard-metrics{grid-template-columns:repeat(4,minmax(0,1fr))}.metric-card{padding:12px}.metric-value{font-size:clamp(20px,3vw,27px)}}
+@media(max-width:390px){.nav-inner{gap:1px}.nav button{font-size:8px;padding-left:0;padding-right:0}.nav .ico{font-size:16px}.dashboard-metrics{gap:7px}.metric-card{padding:10px}.metric-value{font-size:23px}}
+
 </style>
 </head>
 <body>
@@ -248,10 +310,6 @@ button:focus-visible,input:focus-visible,select:focus-visible,textarea:focus-vis
  <div class="section-head"><h2>Bilan & historique</h2><span class="pill">LOCAL</span></div>
  <div class="hero"><div class="eyebrow">IRON LOG / COACHING</div><h2 id="coachHeadline">Construis ta base.</h2><p id="coachIntro">Enregistre des séances pour obtenir des tendances utiles.</p><button class="btn" onclick="renderCoach()">Actualiser ↻</button></div>
  <div class="card" style="margin-top:10px"><div class="card-title">Bilan de la semaine</div><div id="coachReport"></div></div>
- <div class="card"><div class="card-title">Progression par exercice</div><p class="tiny">Compare tes charges, tes répétitions et tes records à chaque séance enregistrée.</p><select id="progressionExercise" class="full" onchange="selectedProgressionExercise=this.value;renderProgression()" aria-label="Choisir un exercice"></select><div id="progressionStats" class="stats-grid"></div><div id="progressionChart"></div><div id="personalRecords"></div></div>
- <div class="card"><div class="card-title">Volume d’entraînement</div><p class="tiny">Volume hebdomadaire calculé à partir des charges × répétitions saisies.</p><div id="volumeChart"></div></div>
- <div class="card"><div class="card-title">Records personnels</div><p class="tiny">Meilleure charge enregistrée pour chaque exercice. Compare les records au sein d’un même exercice.</p><div id="recordsChart"></div></div>
- <div class="card"><div class="card-title">Poids corporel</div><p class="tiny">Historique des pesées enregistrées dans Réglages. Ajoute une pesée pour suivre ta prise de masse.</p><div id="weightChart"></div></div>
  <div class="card"><div class="card-title">Conseils du coach</div><div id="coachTips"></div></div>
  <div class="section-head"><h2>Évolution physique</h2><span class="pill">PHOTO · 14 JOURS</span></div>
  <div class="card" id="photoProgressCard"><div class="card-title">Journal photo</div><p class="tiny">Ajoute une photo de référence aujourd’hui, puis une nouvelle toutes les deux semaines. Pour comparer honnêtement, garde la même lumière, distance, posture et heure de la journée.</p><div id="photoReminderStatus" class="report-item">Chargement du suivi photo…</div><label class="tiny" for="progressPhotoInput">Ajouter une photo (face, profil ou dos)</label><input id="progressPhotoInput" type="file" accept="image/*" onchange="addProgressPhoto(event)" style="display:block;width:100%;padding:10px;margin:8px 0"><label class="tiny" for="progressPhotoNote">Note facultative</label><input id="progressPhotoNote" class="search" maxlength="180" placeholder="Ex. poids, entraînement, ressenti"><div class="row" style="flex-wrap:wrap;margin-top:9px"><button class="btn secondary small" onclick="enablePhotoReminders()">🔔 Activer les rappels</button><button class="btn ghost small" onclick="sendTestNotification()">Tester une notification</button><button class="btn ghost small" onclick="refreshPhotoJournal()">Actualiser</button></div><div class="card" style="margin-top:12px;background:#151515"><div class="card-title">Analyse IA comparative</div><p class="tiny">Choisis deux photos enregistrées. Elles ne seront envoyées que lorsque tu lances l’analyse et donnes ton accord. L’IA décrit les différences visibles, sans mesurer précisément la masse musculaire ni le taux de graisse.</p><label class="tiny" for="photoCompareBefore">Photo de référence (avant)</label><select id="photoCompareBefore" class="search" style="margin:5px 0 10px"><option value="">Choisir une photo…</option></select><label class="tiny" for="photoCompareAfter">Photo récente (après)</label><select id="photoCompareAfter" class="search" style="margin:5px 0 10px"><option value="">Choisir une photo…</option></select><label class="warmup-item" style="padding:8px 0"><input type="checkbox" id="photoAiConsent"><span class="tiny">J’accepte d’envoyer ces deux photos à Groq pour une analyse ponctuelle. Je comprends qu’elles quittent mon appareil et que le fournisseur les traite selon sa politique de confidentialité.</span></label><button class="btn full" id="analyzePhotosBtn" onclick="analyzeProgressPhotos()">Analyser l’évolution avec l’IA</button><div id="photoAiStatus" class="report-item" style="display:none"></div><div id="photoAiResult" class="tiny" style="margin-top:10px;line-height:1.65;white-space:pre-wrap"></div></div><div id="photoTimeline" style="margin-top:12px"></div><p class="tiny">Confidentialité : les photos stockées restent locales. Aucune analyse ne démarre sans ton clic et ton consentement. IRON LOG ne les conserve pas côté serveur, mais le fournisseur externe traite la requête. Évite les photos intimes et consulte sa politique avant tout envoi.</p></div>
@@ -259,6 +317,16 @@ button:focus-visible,input:focus-visible,select:focus-visible,textarea:focus-vis
  <p class="tiny">Tu peux supprimer une séance enregistrée par erreur. Cette suppression ne peut pas être annulée.</p>
  <div id="historyList"></div>
  <div class="card"><div class="card-title">À propos du coach</div><p class="tiny">Le coach analyse localement tes séances et ta progression avec des règles d’entraînement. Il ne s’agit pas encore d’une IA générative connectée : aucune donnée personnelle n’est envoyée à un serveur.</p></div>
+</section>
+
+<section id="page-stats" class="page">
+ <div class="dashboard-head"><div><div class="eyebrow">IRON LOG · PROGRESSION</div><h2 class="dashboard-title">TES STATISTIQUES</h2><p class="dashboard-date">Graphiques calculés depuis tes séances et pesées enregistrées.</p></div><div class="gold-mark">↗</div></div>
+ <div class="dashboard-hero"><div class="eyebrow gold-text">SUIVI DE PERFORMANCE</div><h2>Mesure ta progression.</h2><p>Les graphiques se remplissent avec les charges, répétitions et pesées que tu enregistres.</p><button class="btn" onclick="renderTrainingDashboardCharts();renderProgression()">ACTUALISER LES GRAPHIQUES ↻</button></div>
+ <div class="card"><div class="card-title">Progression par exercice</div><p class="tiny">Compare tes charges, tes répétitions et tes records à chaque séance enregistrée.</p><select id="progressionExercise" class="full" onchange="selectedProgressionExercise=this.value;renderProgression()" aria-label="Choisir un exercice"></select><div id="progressionStats" class="stats-grid"></div><div id="progressionChart"></div><div id="personalRecords"></div></div>
+ <div class="card"><div class="card-title">Volume d’entraînement</div><p class="tiny">Volume hebdomadaire calculé à partir des charges × répétitions saisies.</p><div id="volumeChart"></div></div>
+ <div class="card"><div class="card-title">Records personnels</div><p class="tiny">Meilleure charge enregistrée pour chaque exercice. Compare les records au sein d’un même exercice.</p><div id="recordsChart"></div></div>
+ <div class="card"><div class="card-title">Poids corporel</div><p class="tiny">Historique des pesées enregistrées dans Réglages. Ajoute une pesée pour suivre ta prise de masse.</p><div id="weightChart"></div></div>
+
 </section>
 
 <section id="page-settings" class="page">
@@ -286,6 +354,7 @@ button:focus-visible,input:focus-visible,select:focus-visible,textarea:focus-vis
 <nav class="nav"><div class="nav-inner">
 <button class="active" data-page="home" onclick="go('home')"><span class="ico">⌂</span>Accueil</button>
 <button data-page="workout" onclick="go('workout')"><span class="ico">↗</span>Séance</button>
+<button data-page="stats" onclick="go('stats')"><span class="ico">▥</span>Stats</button>
 <button data-page="library" onclick="go('library')"><span class="ico">▦</span>Exercices</button>
 <button data-page="nutrition" onclick="go('nutrition')"><span class="ico">◉</span>Nutrition</button>
 <button data-page="coach" onclick="go('coach')"><span class="ico">✦</span>Coach</button>
@@ -439,7 +508,7 @@ function saveState(){state.program=PROGRAM.map(x=>({id:x.id,name:x.name,day:x.da
 function weekStart(d=new Date()){let x=new Date(d);x.setHours(0,0,0,0);x.setDate(x.getDate()-((x.getDay()+6)%7));return x}
 function thisWeek(date){return new Date(date)>=weekStart()}
 function dateLabel(d){return new Date(d).toLocaleDateString("fr-FR",{day:"2-digit",month:"short"})}
-function go(page){document.querySelectorAll(".page").forEach(p=>p.classList.toggle("active",p.id==="page-"+page));document.querySelectorAll(".nav button").forEach(b=>b.classList.toggle("active",b.dataset.page===page));if(page==="workout")renderWorkout();if(page==="library")renderLibrary();if(page==="nutrition"){document.getElementById("nutritionWeight").value=state.weight.length?state.weight[state.weight.length-1].kg:""}if(page==="coach"){renderCoach();refreshPhotoJournal();}if(page==="home")renderHome();if(page==="settings"){document.getElementById("bodyWeight").value=state.weight.length?state.weight[state.weight.length-1].kg:"";renderSavedSessions()}window.scrollTo(0,0)}
+function go(page){document.querySelectorAll(".page").forEach(p=>p.classList.toggle("active",p.id==="page-"+page));document.querySelectorAll(".nav button").forEach(b=>b.classList.toggle("active",b.dataset.page===page));if(page==="workout")renderWorkout();if(page==="stats"){renderTrainingDashboardCharts();renderProgression();}if(page==="library")renderLibrary();if(page==="nutrition"){document.getElementById("nutritionWeight").value=state.weight.length?state.weight[state.weight.length-1].kg:""}if(page==="coach"){renderCoach();refreshPhotoJournal();}if(page==="home")renderHome();if(page==="settings"){document.getElementById("bodyWeight").value=state.weight.length?state.weight[state.weight.length-1].kg:"";renderSavedSessions()}window.scrollTo(0,0)}
 function updateStats(){document.getElementById("weekCount").textContent=Math.min(4,state.logs.filter(l=>thisWeek(l.date)).length)+"/4";document.getElementById("totalCount").textContent=state.logs.length;document.getElementById("exerciseCount").textContent=LIBRARY.length}
 function renderHome(){
  const now=new Date(),dateEl=document.getElementById("dashboardDate");
@@ -501,8 +570,8 @@ function finishWorkout(){
    if(done)d.exercises[i].sets[j].done=done.checked;
   });
  });
- const has=s.exercises.some((e,i)=>(d.exercises[i]?.sets||[]).some(a=>String(a.kg??"").trim()!==""||String(a.reps??"").trim()!==""));
- if(!has){alert("Renseigne au moins une charge ou des répétitions avant d'enregistrer.");return}
+ // Enregistrement autorisé même si certains exercices, charges ou répétitions sont vides.
+ // Les champs absents restent null/vide : aucune valeur fictive n’est ajoutée.
  state.logs.push({id:Date.now(),sessionId:current,sessionName:s.name,date:new Date(d.date+"T12:00:00").toISOString(),exercises:s.exercises.map((e,i)=>({name:e[0],sets:(d.exercises[i]?.sets||[]).map(x=>({...x,kg:x.kg===""?null:Number(x.kg),reps:x.reps===""?null:Number(x.reps)}))}))});
  delete state.drafts[current];saveState();showWorkoutSaved();setTimeout(()=>go("coach"),1700)
 }
