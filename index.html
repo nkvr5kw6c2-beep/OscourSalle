@@ -502,9 +502,10 @@ function finishWorkout(){
    if(done)d.exercises[i].sets[j].done=done.checked;
   });
  });
- const has=s.exercises.some((e,i)=>(d.exercises[i]?.sets||[]).some(a=>String(a.kg??"").trim()!==""||String(a.reps??"").trim()!==""));
- if(!has){alert("Renseigne au moins une charge ou des répétitions avant d'enregistrer.");return}
- state.logs.push({id:Date.now(),sessionId:current,sessionName:s.name,date:new Date(d.date+"T12:00:00").toISOString(),exercises:s.exercises.map((e,i)=>({name:e[0],sets:(d.exercises[i]?.sets||[]).map(x=>({...x,kg:x.kg===""?null:Number(x.kg),reps:x.reps===""?null:Number(x.reps)}))}))});
+ const has=s.exercises.some((e,i)=>(d.exercises[i]?.sets||[]).some(a=>String(a.kg??"").trim()!==""||String(a.reps??"").trim()!==""||a.done));
+ if(!has&&!confirm("Tu n’as renseigné aucune charge, répétition ni série terminée. Enregistrer quand même cette séance comme séance écourtée ?"))return;
+ const completedExercises=s.exercises.map((e,i)=>({name:e[0],sets:(d.exercises[i]?.sets||[]).map(x=>({...x,kg:x.kg===""?null:Number(x.kg),reps:x.reps===""?null:Number(x.reps)}))})).filter(ex=>ex.sets.some(x=>x.kg!==null||x.reps!==null||x.done));
+ state.logs.push({id:Date.now(),sessionId:current,sessionName:s.name,date:new Date(d.date+"T12:00:00").toISOString(),exercises:completedExercises,shortSession:completedExercises.length<s.exercises.length});
  delete state.drafts[current];saveState();showWorkoutSaved();setTimeout(()=>go("coach"),1700)
 }
 function showWorkoutSaved(){
